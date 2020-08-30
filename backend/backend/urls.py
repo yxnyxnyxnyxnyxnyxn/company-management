@@ -4,7 +4,7 @@ from rest_framework import routers
 from company import views
 
 router = routers.DefaultRouter()
-router.register(r'company-management', views.CompanyView, 'company')
+router.register(r'companies', views.CompanyView, 'company')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -6,7 +6,8 @@ from .models import Company
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'founded', 'ceo', 'location')
+    list_display = ('name', 'headquarters','industry','size','description', 'website','founded', 'ceo')
 
 
 admin.site.register(Company, CompanyAdmin)
+

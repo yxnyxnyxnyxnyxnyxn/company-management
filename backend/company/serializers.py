@@ -5,4 +5,4 @@ from .models import Company
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('name', 'description', 'founded', 'ceo', 'location')
+        fields = ('name', 'headquarters','industry','size','description', 'website','founded', 'ceo')
