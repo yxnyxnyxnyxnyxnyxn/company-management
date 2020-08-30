@@ -13,6 +13,7 @@ class Company(models.Model):
         (7, '5001-10,000'),
         (8, '10,000+')
     ]
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     headquarters = models.CharField(max_length=200,default=None, blank=True, null=True)
     industry = models.CharField(max_length=200,default=None, blank=True, null=True)
