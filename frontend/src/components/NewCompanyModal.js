@@ -40,8 +40,8 @@ export default class NewCompanyModal extends Component {
               value={this.state.activeItem.name}
               onChange={this.handleChange}
               placeholder="Company Name"
+              invalid={this.state.activeItem.name.length==0}
             />
-            <FormFeedback tooltip>Required</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="headquarter">Headquarter</Label>

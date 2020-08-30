@@ -68,18 +68,20 @@ class App extends Component {
       // }
 
       handleSubmit = item => {
-       this.toggle();
-       if (!item['size']){
-         item['size'] = 1
-       }
-       axios.post('http://localhost:8000/api/companies/', item)
-       .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        this.setState({company: this.state.companies.push(item)})
+        if (item['name']){
+          this.toggle();
+          if (!item['size']){
+            item['size'] = 1
+          }
+          axios.post('http://localhost:8000/api/companies/', item)
+          .then(response=> {
+            this.setState({company: this.state.companies.push(item)})
+          })
+          .catch(error=> {
+            console.log(error);
+          });
+        }
+
      };
 
       render() {
