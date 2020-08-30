@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import Modal from "./components/create-company-modal";
 import Search from "./components/Search";
 import Companies from "./components/Companies.js"
 import axios from "axios"
+import NewCompanyModal from "./components/NewCompanyModal"
 
 //TODO: show details , create new company , search , delete, edit
 class App extends Component {
@@ -11,11 +11,15 @@ class App extends Component {
         this.state = {
           activeItem: {
             name: "",
+            headquarters: "",
             industry: "",
+            size: "",
+            website:"",
             ceo:"",
             description: "",
-            founded: new Date()
+            founded: ""
           },
+          newCompanyModal: false,
           companies: []
         };
       }
@@ -38,6 +42,24 @@ class App extends Component {
           .catch(err=> console.log(err))
       }
 
+      addNewCompany =() =>{
+        const item = {
+          name: "",
+          headquarters: "",
+          industry: "",
+          size: "",
+          website:"",
+          ceo:"",
+          description: "",
+          founded: ""
+        }
+        this.setState({ activeItem: item,newCompanyModal: !this.state.newCompanyModal });
+      }
+
+      toggle = () => {
+        this.setState({ newCompanyModal: !this.state.newCompanyModal});
+      };
+
       // handleInput = (e) =>{
       //   let s = e.target.value;
       //   setState(prevState=>{
@@ -55,12 +77,21 @@ class App extends Component {
                 <Search />
 
                 <Companies companies={this.state.companies} />
-
+                <div className="add-new">
                 <button
-                  className="btn btn-secondary mr-2"
+                  className="btn btn-primary mr-2"
+                  onClick={this.addNewCompany}
                 >
-                  Edit
+                  Add Company
                 </button>
+                </div>
+                {this.state.newCompanyModal ? (
+                  <NewCompanyModal
+                  activeItem={this.state.activeItem}
+                  toggle={this.toggle}
+                  // onSave={this.handleSubmit}
+                  />
+                  ) : null}
               </main>
             </div>
 

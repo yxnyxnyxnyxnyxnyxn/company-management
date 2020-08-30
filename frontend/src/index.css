@@ -53,6 +53,11 @@ section {
 	transition: 0.4s ease-out;
 }
 
+.add-new {
+  float: right;
+  padding: 20px 0px
+}
+
 /* .searchbox:focus {
 	box-shadow: 0px 0px 8px 3px #4484C4;
 } */
