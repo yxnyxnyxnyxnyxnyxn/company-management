@@ -4,7 +4,7 @@ import Search from "./components/Search";
 import Companies from "./components/Companies.js"
 import axios from "axios"
 
-//TODO: show details , create new company , search , delete, edit 
+//TODO: show details , create new company , search , delete, edit
 class App extends Component {
       constructor(props) {
         super(props);
@@ -53,7 +53,14 @@ class App extends Component {
               </header>
               <main>
                 <Search />
+
                 <Companies companies={this.state.companies} />
+
+                <button
+                  className="btn btn-secondary mr-2"
+                >
+                  Edit
+                </button>
               </main>
             </div>
 
