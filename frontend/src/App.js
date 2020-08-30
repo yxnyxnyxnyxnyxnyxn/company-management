@@ -67,6 +67,21 @@ class App extends Component {
       //   });
       // }
 
+      handleSubmit = item => {
+       this.toggle();
+       if (!item['size']){
+         item['size'] = 1
+       }
+       axios.post('http://localhost:8000/api/companies/', item)
+       .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        this.setState({company: this.state.companies.push(item)})
+     };
+
       render() {
         return (
             <div className="App">
@@ -89,7 +104,7 @@ class App extends Component {
                   <NewCompanyModal
                   activeItem={this.state.activeItem}
                   toggle={this.toggle}
-                  // onSave={this.handleSubmit}
+                  onSave={this.handleSubmit}
                   />
                   ) : null}
               </main>
