@@ -22,19 +22,21 @@ class App extends Component {
             founded: ""
           },
           newCompanyModal: false,
-          companies: []
+          companies: [],
+          s: "",
+          apiurl: "http://localhost:8000/api/companies/",
+          allCompanies: []
         };
       }
-
       componentDidMount(){
         this.refreshList();
       }
 
       refreshList = ()=>{
         axios
-          .get("http://localhost:8000/api/companies/")
+          .get(this.state.apiurl)
           .then(res=>
-            this.setState({companies: res.data})
+            this.setState({companies: res.data, allCompanies:res.data})
           )
           .catch(err=> console.log(err))
       }
@@ -58,23 +60,21 @@ class App extends Component {
       };
 
       handleSubmit = item => {
-        console.log("id: ",item.id)
         if (item['name']){
           this.toggle();
           if (!item['size']){
             item['size'] = 1
           }
           if (!item.id){
-            axios.post('http://localhost:8000/api/companies/', item)
+            axios.post(this.state.apiurl, item)
             .then(response=> {
-              console.log(response.data)
               this.setState({company: this.state.companies.push(response.data)})
             })
             .catch(error=> {
               console.log(error);
             });
           }else{
-            axios.put(`http://localhost:8000/api/companies/${item.id}/`, item)
+            axios.put(`${this.state.apiurl}${item.id}/`, item)
             .then(response=> {
               const index = this.state.companies.findIndex((cp) => cp.id === item.id);
               const updatedCompanies = update(this.state.companies, {$splice: [[index, 1,  response.data]]});  // array.splice(start, deleteCount, item1)
@@ -88,7 +88,7 @@ class App extends Component {
      };
 
      deleteCompany = item =>{
-       axios.delete(`http://localhost:8000/api/companies/${item.id}`)
+       axios.delete(`${this.state.apiurl}${item.id}`)
        .then(res=>{
          const restCompanies = this.state.companies.filter(cp => cp.id != item.id)
          this.setState({companies: restCompanies})
@@ -102,6 +102,17 @@ class App extends Component {
 
        this.setState({ activeItem: item,newCompanyModal: !this.state.newCompanyModal});
      }
+     handleInput = (e) => {
+       let s = e.target.value;
+       if (s.length == 0){
+         this.setState({companies: this.state.allCompanies})
+       }else{
+         const filteredCompanies = this.state.companies.filter(cp=>
+           cp['name'].includes(s)
+         )
+        this.setState({companies: filteredCompanies})
+       }
+     }
 
       render() {
         return (
@@ -110,7 +121,7 @@ class App extends Component {
                 <h1>Company Management</h1>
               </header>
               <main>
-                <Search />
+                <Search handleInput={this.handleInput}/>
 
                 <Companies companies={this.state.companies} deleteCompany={this.deleteCompany} editCompany={this.editCompany}/>
                 <div className="add-new">

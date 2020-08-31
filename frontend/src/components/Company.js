@@ -1,7 +1,8 @@
 import React from 'react'
-
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
 function Company({company,deleteCompany,editCompany}){
+
   return (
     <>
         <span>
